@@ -44,13 +44,13 @@ export class RegistroComponent {
       return 
       } 
 
-      if(prueba.notas >'20' || prueba.notas < '0') {
+      if( parseInt(prueba.notas)>20 || parseInt(prueba.notas) < 0) {
         this.swalAdvice(false,'info','maximo nota es 20 y minima es 0');
         return
       }   
       else{  
       this.guardarRegistro.push(prueba);
-      prueba.notas>='14' && prueba.notas<='20' ?
+      parseInt(prueba.notas) >=14 && parseInt(prueba.notas) <=20 ?
        prueba.calificaciones = "aprobado" : 
        prueba.calificaciones="desaprobado";
       }
@@ -64,14 +64,14 @@ export class RegistroComponent {
       notas : this.registro.nota,
       calificaciones : this.registro.calificacion
     }
-        if(actualizar.notas<'0' || actualizar.notas>'20'){
+        if( parseInt(actualizar.notas) < 0 || parseInt(actualizar.notas) > 20){
           this.swalAdvice(false,'info','maximo nota es 20 y minima es 0')
         }
         else{
           
           if(this.guardarIndice>=0){
            
-            actualizar.notas>='14' && actualizar.notas<='20' ?
+            parseInt(actualizar.notas) >=14 && parseInt(actualizar.notas) <= 20 ?
             actualizar.calificaciones = "aprobado" : 
             actualizar.calificaciones="desaprobado";
 
@@ -89,7 +89,7 @@ export class RegistroComponent {
         }
   }
    estaAprobado(nota: string): boolean {
-    return ((nota) >= '14' && (nota) <= '20') ? true : false;
+    return (parseInt(nota) >= 14 && parseInt(nota) <= 20) ? true : false;
     }
 
     guardarLocalStorage(){
