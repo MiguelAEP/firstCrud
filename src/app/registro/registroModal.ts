@@ -1,5 +1,5 @@
 export class Modal {
-    curso :string = "";
-    nota : string= "";
-    calificacion?:string;
+    course :string = "";
+    note : string= "";
+    calification?:string;
 }

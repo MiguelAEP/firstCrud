@@ -9,127 +9,130 @@ import Swal from 'sweetalert2';
   styleUrls: ['./registro.component.css']
 })
 export class RegistroComponent {
-  guardarIndice:number=0;
-  registro:Modal = new Modal;
-  esCadena:boolean = true;
-  activarBotonEditar:boolean =false;
+  saveIndex:number=0;
+  registre:Modal = new Modal;
+  activeButtonEdit:boolean =false;
   
-  guardarRegistro:any [] = []
-    curso = this.registro.curso
-     nota = this.registro.nota
-    calificacion = this.registro.calificacion
+  saveRegistre:any [] = []
+    course = this.registre.course
+     note = this.registre.note
+    calification = this.registre.calification
 
   constructor() {
-    this.cargarLocalStorage();
+    this.getLocalStorage();
   }
 
-  enviar(f : NgForm){
+  send(f : NgForm){
     if(f.invalid){
       return Object.values(f.controls).forEach(data=>{
         data.markAsTouched();
       })
     }
-   this.registrarDatos(f);
+   this.registerData(f);
    }
 
-   registrarDatos(f:NgForm):any{
-    let prueba = {
-      cursos : this.registro.curso,
-      notas : this.registro.nota,
-      calificaciones: this.registro.calificacion
+   registerData(f:NgForm):any{
+    let test = {
+    courses : this.registre.course,
+    notes : this.registre.note,
+    califications: this.registre.calification
     }
     
-     if((isNaN( parseInt(this.registro.nota) ))){
-      this.swalAdvice(false,'error','no puede ingresar cadena');
-      return 
-      } 
+    if((isNaN( parseInt(test.notes) ))){
+    this.swalAdvice(false,'error','no puede ingresar cadena');
+    return 
+    } 
 
-      if( parseInt(prueba.notas)>20 || parseInt(prueba.notas) < 0) {
-        this.swalAdvice(false,'info','maximo nota es 20 y minima es 0');
-        return
+   if( parseInt(test.notes)>20 || parseInt(test.notes) < 0) {
+      this.swalAdvice(false,'info','maximo nota es 20 y minima es 0');
+      return
       }   
-      else{  
-      this.guardarRegistro.push(prueba);
-      parseInt(prueba.notas) >=14 && parseInt(prueba.notas) <=20 ?
-       prueba.calificaciones = "aprobado" : 
-       prueba.calificaciones="desaprobado";
-      }
-      this.limpiar(f);
-      this. guardarLocalStorage();
+   else{  
+    this.saveRegistre.push(test);
+    parseInt(test.notes) >=14 && parseInt(test.notes) <=20 ?
+    test.califications = "aprobado" : 
+    test.califications="desaprobado";
+    }
+    this.setLocalStorage();
    } 
    
-   actualizar(f : NgForm){
-    let actualizar = {
-      cursos : this.registro.curso,
-      notas : this.registro.nota,
-      calificaciones : this.registro.calificacion
-    }
-        if( parseInt(actualizar.notas) < 0 || parseInt(actualizar.notas) > 20){
-          this.swalAdvice(false,'info','maximo nota es 20 y minima es 0')
-        }
-        else{
-          
-          if(this.guardarIndice>=0){
-           
-            parseInt(actualizar.notas) >=14 && parseInt(actualizar.notas) <= 20 ?
-            actualizar.calificaciones = "aprobado" : 
-            actualizar.calificaciones="desaprobado";
-
-            for( let i=0 ; i<=this.guardarRegistro.length ; i++ ){
-              console.log(this.guardarRegistro[i])
-              this.guardarRegistro[this.guardarIndice]['notas']=actualizar.notas
-              this.guardarRegistro[this.guardarIndice]['calificaciones']=actualizar.calificaciones
-              this.guardarRegistro[this.guardarIndice]['cursos']=actualizar.cursos
-          } 
-          this.guardarLocalStorage();
-          this.cargarLocalStorage();
-          this.activarBotonEditar=false
-          this.limpiar(f)
-          }
-        }
-  }
-   estaAprobado(nota: string): boolean {
-    return (parseInt(nota) >= 14 && parseInt(nota) <= 20) ? true : false;
-    }
-
-    guardarLocalStorage(){
-      localStorage.setItem('registro',JSON.stringify(this.guardarRegistro))
-    }
-    cargarLocalStorage(){
-      let key = localStorage.getItem('registro')
-       if(key) {
-        this.guardarRegistro =JSON.parse(key) 
-       }
-       else {
-         this.guardarRegistro = []
-       }
-    }
-
-    eliminarFila(index:number){
-      this.guardarRegistro.splice(index,1)
-      localStorage.setItem('registro',JSON.stringify(this.guardarRegistro))
-      this.cargarLocalStorage();
-    }
-     
-    editar(index:number){
-      this.guardarIndice=index
-      if(index>=0){
-      this.activarBotonEditar= !this.activarBotonEditar;
+    update(f : NgForm){
+     let update = {
+      courses : this.registre.course,
+      notes : this.registre.note,
+      califications : this.registre.calification
       }
+      if( parseInt(update.notes) < 0 || parseInt(update.notes) > 20){
+      this.swalAdvice(false,'info','maximo nota es 20 y minima es 0')
+      }
+      else{
+          
+      if(this.saveIndex>=0){
+           
+      parseInt(update.notes) >=14 && parseInt(update.notes) <= 20 ?
+      update.califications = "aprobado" : 
+      update.califications="desaprobado";
+              
+      for( let i=0 ; i<=this.saveRegistre.length ; i++ ){
+              
+      this.saveRegistre[this.saveIndex]['notes']=update.notes
+      this.saveRegistre[this.saveIndex]['califications']=update.califications
+      this.saveRegistre[this.saveIndex]['courses']=update.courses
+      } 
+      this.setLocalStorage();
+      this.getLocalStorage();
+      this.activeButtonEdit=false
+      this.clean(f)
+      }
+      }
+  }
+
+  edit(index:number){
+    this.saveIndex=index
+    this.activeButtonEdit= !this.activeButtonEdit;
+    if(index>=0){
+   
+    for(let i=0 ; i<=this.saveRegistre.length ; i++){
+      this.registre.course=this.saveRegistre[this.saveIndex]['courses']
+      this.registre.note=this.saveRegistre[this.saveIndex]['notes']
+    }
+    }
+  }
+
+   isAprove(note: string): boolean {
+    return (parseInt(note) >= 14 && parseInt(note) <= 20) ? true : false;
     }
 
-    limpiar(f : NgForm){
-      return Object.values(f.controls).forEach(data=>{
-        data.reset();
-        data.markAsUntouched();
-      })
+    setLocalStorage(){
+      localStorage.setItem('registro',JSON.stringify(this.saveRegistre))
     }
+    getLocalStorage(){
+    let key = localStorage.getItem('registro')
+    if(key) {
+    this.saveRegistre =JSON.parse(key)} 
+    
+    else {
+   this.saveRegistre = []}   
+   }
 
-   swalAdvice(allow:boolean , icons:any , text:string){
-    Swal.fire({
-      allowOutsideClick: allow,
-      icon : icons,
-      text : text
+  deleteRow(index:number){
+  this.saveRegistre.splice(index,1);
+  this.setLocalStorage()
+  this.getLocalStorage();
+  }
+    
+  clean(f : NgForm){
+  return Object.values(f.controls).forEach(data=>{
+  data.reset();
+  data.markAsUntouched();
+  })
+  }
+
+  swalAdvice(allow:boolean , icons:any , text:string){
+  Swal.fire({
+   allowOutsideClick: allow,
+   icon : icons,
+   text : text
     })
   }
 }

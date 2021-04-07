@@ -1,10 +1,10 @@
-<form class="form" (ngSubmit)="enviar(f)" #f="ngForm">
+<form class="form" (ngSubmit)="send(f)" #f="ngForm">
     <div class="form-group">
       <label for="exampleInputEmail1">Curso</label>
       <input type="text" 
       class="form-control"
       name="curso"
-      [(ngModel)]="registro.curso"
+      [(ngModel)]="registre.course"
       required
       minlength="5"
       [class.is-invalid]="curso.invalid && curso.touched"
@@ -21,21 +21,18 @@
       <label for="exampleInputPassword1">Nota</label>
       <input type="text" class="form-control"
       name="nota"
-      [(ngModel)]="registro.nota"
+      [(ngModel)]="registre.note"
       required
       maxlength="2"
-      [class.is-invalid]="nota.invalid && nota.touched"
       #nota= "ngModel"
       placeholder="Ingresa nota"
+      (keyup.enter)="update(f)" f="ngForm"
       >
     </div>
-    <span class="text-danger"
-    *ngIf="nota.invalid && nota.touched">
-    ingrese mas digitos
-   </span>
+   
  
-    <button *ngIf="!activarBotonEditar" type="submit"  class="btn btn-primary">registrar</button>
-    <button *ngIf="activarBotonEditar" type="button"  class="btn btn-primary" (click)="actualizar(f)" f="ngFor" >Actualizar</button>
+    <button *ngIf="!activeButtonEdit" type="submit"  class="btn btn-primary">registrar</button>
+    <button *ngIf="activeButtonEdit" type="button"  class="btn btn-primary" (click)="update(f)" f="ngForm" >Actualizar</button>
   </form>
 
   <table class="table table-dark">
@@ -46,19 +43,19 @@
       
     </thead>
 
-    <thead *ngFor = "let elementos of guardarRegistro , let i = index">
+    <thead *ngFor = "let elementos of saveRegistre , let i = index">
       
-        <td class="scope">{{elementos.cursos}}</td>
-        <td class="scope">{{elementos.notas}}</td>
+        <td class="scope">{{elementos.courses}}</td>
+        <td class="scope">{{elementos.notes}}</td>
         <td class="text-center">
           <span class="badge badge-pill"
-                [ngClass]="{'badge-success': estaAprobado(elementos.notas),
-                            'badge-danger' : !estaAprobado(elementos.notas)}">
-              {{elementos.calificaciones}}
+                [ngClass]="{'badge-success': isAprove(elementos.notes),
+                            'badge-danger' : !isAprove(elementos.notes)}">
+              {{elementos.califications}}
           </span>
         </td>
-        <button type="button" class="btn btn-primary mr-5" (click)="editar(i)" >Editar</button>
-        <button type="button" class="btn btn-secondary"(click)="eliminarFila(i)" >Eliminar</button>
+        <button type="button" class="btn btn-primary mr-5" (click)="edit(i)" >Editar</button>
+        <button type="button" class="btn btn-secondary"(click)="deleteRow(i)" >Eliminar</button>
        
       </thead>
      
