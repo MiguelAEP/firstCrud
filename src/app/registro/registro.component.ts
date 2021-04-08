@@ -53,6 +53,7 @@ export class RegistroComponent {
     test.califications = "aprobado" : 
     test.califications="desaprobado";
     }
+    this.clean(f);
     this.setLocalStorage();
    } 
    

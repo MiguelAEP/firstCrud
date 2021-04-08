@@ -26,13 +26,13 @@
       maxlength="2"
       #nota= "ngModel"
       placeholder="Ingresa nota"
-      (keyup.enter)="update(f)" f="ngForm"
+      
       >
     </div>
    
  
     <button *ngIf="!activeButtonEdit" type="submit"  class="btn btn-primary">registrar</button>
-    <button *ngIf="activeButtonEdit" type="button"  class="btn btn-primary" (click)="update(f)" f="ngForm" >Actualizar</button>
+    <button *ngIf="activeButtonEdit" type="submit"  class="btn btn-primary" (click)="update(f)" f="ngForm" >Actualizar</button>
   </form>
 
   <table class="table table-dark">
