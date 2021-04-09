@@ -12,7 +12,7 @@ export class RegistroComponent {
   saveIndex:number=0;
   registre:Modal = new Modal;
   activeButtonEdit:boolean =false;
-  
+  expretion = '[A-Za-z]'	
   saveRegistre:any [] = []
     course = this.registre.course
      note = this.registre.note
@@ -63,6 +63,21 @@ export class RegistroComponent {
       notes : this.registre.note,
       califications : this.registre.calification
       }
+
+      if(update.notes.match(this.expretion)){
+        this.swalAdvice(false,'error','no puede ingresar cadena');
+        this.clean(f)
+        this.activeButtonEdit=false
+        return 
+      }
+
+      if((isNaN( parseInt(update.notes) ))){
+        this.swalAdvice(false,'error','no puede ingresar cadena');
+        this.clean(f)
+        this.activeButtonEdit=false
+        return 
+        } 
+
       if( parseInt(update.notes) < 0 || parseInt(update.notes) > 20){
       this.swalAdvice(false,'info','maximo nota es 20 y minima es 0')
       }
