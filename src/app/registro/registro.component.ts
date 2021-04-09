@@ -38,6 +38,12 @@ export class RegistroComponent {
     califications: this.registre.calification
     }
     
+    if(test.courses.match(this.expretion)===null){
+      this.swalAdvice(false,'error','no puede ingresar numeros');
+      this.clean(f)
+      return 
+    }
+
     if((isNaN( parseInt(test.notes) ))){
     this.swalAdvice(false,'error','no puede ingresar cadena');
     return 
@@ -62,6 +68,12 @@ export class RegistroComponent {
       courses : this.registre.course,
       notes : this.registre.note,
       califications : this.registre.calification
+      }
+
+      if(update.courses.match(this.expretion)===null){
+        this.swalAdvice(false,'error','no puede ingresar numeros');
+        this.clean(f)
+        return 
       }
 
       if(update.notes.match(this.expretion)){
